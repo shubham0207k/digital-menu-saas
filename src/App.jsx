@@ -25,7 +25,7 @@ function AppContent() {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-darkbg-DEFAULT text-gray-900 dark:text-white transition-colors duration-300">
+    <div className="min-h-screen bg-gray-50 dark:bg-darkbg-DEFAULT text-gray-900 dark:text-white transition-colors duration-300 pb-20 md:pb-0">
       {/* Sticky global brand header */}
       <Navbar onCartOpen={() => setIsCartOpen(true)} />
       

@@ -1,6 +1,7 @@
 @import "tailwindcss";
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --color-brand-light: #FF9E59;
@@ -17,9 +18,32 @@
 
 /* Base body settings */
 body {
-  transition: background-color 0.3s ease, color 0.3s ease;
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+}
+
+/* Smooth transitions for theme toggle */
+body,
+header,
+nav,
+input,
+textarea,
+button,
+span,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+div,
+.glassmorphism,
+.glass-header {
+  transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Glassmorphism utilities */

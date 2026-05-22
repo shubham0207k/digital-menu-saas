@@ -196,13 +196,21 @@ export const dbService = {
     if (isMock) {
       return JSON.parse(localStorage.getItem("menu_categories"));
     } else {
-      const q = query(collection(db, "categories"));
-      const querySnapshot = await getDocs(q);
-      const categories = [];
-      querySnapshot.forEach((doc) => {
-        categories.push({ id: doc.id, ...doc.data() });
-      });
-      return categories;
+      try {
+        const q = query(collection(db, "categories"));
+        const querySnapshot = await getDocs(q);
+        const categories = [];
+        querySnapshot.forEach((doc) => {
+          categories.push({ id: doc.id, ...doc.data() });
+        });
+        if (!categories || categories.length === 0) {
+          return INITIAL_CATEGORIES;
+        }
+        return categories;
+      } catch (error) {
+        console.error("Error fetching categories from Firestore, falling back to INITIAL_CATEGORIES:", error);
+        return INITIAL_CATEGORIES;
+      }
     }
   },
 
@@ -234,13 +242,21 @@ export const dbService = {
     if (isMock) {
       return JSON.parse(localStorage.getItem("menu_items"));
     } else {
-      const q = query(collection(db, "menu_items"), orderBy("name"));
-      const querySnapshot = await getDocs(q);
-      const items = [];
-      querySnapshot.forEach((doc) => {
-        items.push({ id: doc.id, ...doc.data() });
-      });
-      return items;
+      try {
+        const q = query(collection(db, "menu_items"), orderBy("name"));
+        const querySnapshot = await getDocs(q);
+        const items = [];
+        querySnapshot.forEach((doc) => {
+          items.push({ id: doc.id, ...doc.data() });
+        });
+        if (!items || items.length === 0) {
+          return INITIAL_MENU;
+        }
+        return items;
+      } catch (error) {
+        console.error("Error fetching menu items from Firestore, falling back to INITIAL_MENU:", error);
+        return INITIAL_MENU;
+      }
     }
   },
 

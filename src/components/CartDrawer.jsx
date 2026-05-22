@@ -70,7 +70,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
       <div className="absolute inset-0 cursor-pointer" onClick={onClose}></div>
 
       {/* Drawer Panel */}
-      <div className="relative w-full max-w-md h-full glassmorphism text-gray-900 dark:text-white shadow-2xl flex flex-col justify-between animate-slide-left z-10 border-l border-gray-200 dark:border-gray-800">
+      <div className="relative w-full sm:max-w-md h-[100dvh] md:h-screen glassmorphism text-gray-900 dark:text-white shadow-2xl flex flex-col justify-between animate-slide-left z-10 border-l border-gray-200 dark:border-gray-800">
         
         {/* Header */}
         <div className="p-6 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center bg-gray-50/50 dark:bg-gray-900/50">
@@ -100,7 +100,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
             cart.map((item) => (
               <div 
                 key={item.cartItemId} 
-                className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white/40 dark:bg-gray-900/40 border border-gray-150 dark:border-gray-850 hover:border-gray-200 dark:hover:border-gray-800 transition-colors"
+                className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white/40 dark:bg-gray-900/40 border border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700 transition-colors"
               >
                 {/* Image */}
                 <div className="w-16 h-16 rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 flex-shrink-0">
@@ -176,7 +176,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
 
         {/* Footer Checkout calculations */}
         {cart.length > 0 && (
-          <div className="p-6 border-t border-gray-150 dark:border-gray-850 bg-gray-50/50 dark:bg-gray-900/50 space-y-4">
+          <div className="p-6 border-t border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50 space-y-4">
             {/* Table Number selection */}
             <div className="space-y-1.5">
               <label className="block text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
@@ -187,13 +187,13 @@ const CartDrawer = ({ isOpen, onClose }) => {
                 value={inputTable}
                 onChange={(e) => setInputTable(e.target.value)}
                 placeholder="Enter table number (e.g. 4)"
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-250 dark:border-gray-800 bg-transparent text-sm focus:ring-1 focus:ring-brand focus:border-brand outline-none transition-all"
+                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-transparent text-sm focus:ring-1 focus:ring-brand focus:border-brand outline-none transition-all"
                 disabled={submitting}
               />
             </div>
 
             {/* Price Calculations */}
-            <div className="space-y-1.5 text-xs text-gray-500 dark:text-gray-400 pt-2 border-t border-gray-150 dark:border-gray-850">
+            <div className="space-y-1.5 text-xs text-gray-500 dark:text-gray-400 pt-2 border-t border-gray-200 dark:border-gray-800">
               <div className="flex justify-between">
                 <span>Subtotal</span>
                 <span>₹{subtotal.toFixed(2)}</span>
@@ -202,7 +202,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
                 <span>Tax (8%)</span>
                 <span>₹{tax.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between text-sm font-bold text-gray-900 dark:text-white pt-2 border-t border-gray-150 dark:border-gray-800">
+              <div className="flex justify-between text-sm font-bold text-gray-900 dark:text-white pt-2 border-t border-gray-200 dark:border-gray-800">
                 <span>Total Due</span>
                 <span className="text-brand">₹{total.toFixed(2)}</span>
               </div>

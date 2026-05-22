@@ -85,7 +85,7 @@ const ManagerDashboard = () => {
     return (
       <div 
         key={order.id} 
-        className="p-5 rounded-2xl bg-white dark:bg-gray-900 border border-gray-150 dark:border-gray-800 shadow-sm hover:shadow-md transition-all space-y-4 animate-fade-in"
+        className="p-5 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-md transition-all space-y-4 animate-fade-in"
       >
         {/* Card Header */}
         <div className="flex justify-between items-start">
@@ -95,7 +95,7 @@ const ManagerDashboard = () => {
             </span>
             <div className="flex items-center gap-1.5 mt-0.5">
               <Clock className="w-3.5 h-3.5 text-gray-400" />
-              <span className="text-xs font-semibold text-gray-500 dark:text-gray-450">
+              <span className="text-xs font-semibold text-gray-500 dark:text-gray-400">
                 {getElapsedTime(order.timestamp)}
               </span>
             </div>
@@ -124,8 +124,8 @@ const ManagerDashboard = () => {
         </div>
 
         {/* Footer & Actions */}
-        <div className="flex items-center justify-between">
-          <div>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex justify-between items-center sm:block">
             <span className="text-[9px] text-gray-400 dark:text-gray-500 uppercase tracking-widest font-bold block">
               Total Price
             </span>
@@ -138,7 +138,7 @@ const ManagerDashboard = () => {
             <button
               onClick={() => handleStatusTransition(order.id, order.status)}
               disabled={isTransitioning}
-              className={`py-2 px-4 rounded-xl text-white font-bold text-xs shadow-md transition-all flex items-center gap-1.5 cursor-pointer ${
+              className={`w-full sm:w-auto py-3 sm:py-2 px-4 rounded-xl text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                 isTransitioning ? "opacity-50 cursor-wait" : ""
               } ${
                 order.status === "pending"
@@ -194,31 +194,31 @@ const ManagerDashboard = () => {
             <h1 className="font-serif text-3xl font-bold flex items-center gap-2">
               <ChefHat className="w-8 h-8 text-brand" /> Manager Workspace
             </h1>
-            <p className="text-xs text-gray-550 dark:text-gray-400 mt-1">
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
               Monitor incoming orders, track cook timers, and dispatch plates in real-time.
             </p>
           </div>
 
           {/* Quick Metrics */}
           <div className="flex items-center gap-3">
-            <div className="px-4 py-2.5 rounded-2xl bg-white dark:bg-gray-900 border border-gray-150 dark:border-gray-800/80 flex items-center gap-2 shadow-sm">
+            <div className="px-4 py-2.5 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 flex items-center gap-2 shadow-sm">
               <Bell className="w-4 h-4 text-amber-500 animate-bounce" />
               <div className="text-left">
-                <span className="text-[9px] uppercase tracking-wider text-gray-450 dark:text-gray-500 font-bold block">New Placed</span>
+                <span className="text-[9px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-bold block">New Placed</span>
                 <span className="text-sm font-black leading-none">{pendingOrders.length}</span>
               </div>
             </div>
-            <div className="px-4 py-2.5 rounded-2xl bg-white dark:bg-gray-900 border border-gray-150 dark:border-gray-800/80 flex items-center gap-2 shadow-sm">
+            <div className="px-4 py-2.5 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 flex items-center gap-2 shadow-sm">
               <ChefHat className="w-4 h-4 text-brand animate-pulse" />
               <div className="text-left">
-                <span className="text-[9px] uppercase tracking-wider text-gray-450 dark:text-gray-500 font-bold block">Preparing</span>
+                <span className="text-[9px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-bold block">Preparing</span>
                 <span className="text-sm font-black leading-none">{preparingOrders.length}</span>
               </div>
             </div>
-            <div className="px-4 py-2.5 rounded-2xl bg-white dark:bg-gray-900 border border-gray-150 dark:border-gray-800/80 flex items-center gap-2 shadow-sm">
+            <div className="px-4 py-2.5 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 flex items-center gap-2 shadow-sm">
               <CheckCircle2 className="w-4 h-4 text-emerald-500" />
               <div className="text-left">
-                <span className="text-[9px] uppercase tracking-wider text-gray-450 dark:text-gray-500 font-bold block">Served Today</span>
+                <span className="text-[9px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-bold block">Served Today</span>
                 <span className="text-sm font-black leading-none">{completedOrders.length}</span>
               </div>
             </div>
@@ -253,7 +253,7 @@ const ManagerDashboard = () => {
         {activeTab === "active" ? (
           <>
             {/* Desktop View: Kanban columns */}
-            <div className="hidden lg:grid grid-cols-3 gap-6">
+            <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               
               {/* Column 1: Pending (Placed) */}
               <div className="space-y-4">
@@ -327,14 +327,14 @@ const ManagerDashboard = () => {
             </div>
 
             {/* Mobile View: Tabbed sub-columns */}
-            <div className="lg:hidden space-y-4">
-              <div className="grid grid-cols-3 gap-1 p-1 bg-gray-200/50 dark:bg-gray-900 rounded-xl border border-gray-150 dark:border-gray-800">
+            <div className="md:hidden space-y-4">
+              <div className="grid grid-cols-3 gap-1 p-1 bg-gray-200/50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800">
                 <button
                   onClick={() => setMobileColumn("pending")}
                   className={`py-2 px-1 text-xs font-bold rounded-lg transition-all ${
                     mobileColumn === "pending"
                       ? "bg-amber-500 text-white shadow-sm"
-                      : "text-gray-500 dark:text-gray-405"
+                      : "text-gray-500 dark:text-gray-400"
                   }`}
                 >
                   Pending ({pendingOrders.length})
@@ -344,7 +344,7 @@ const ManagerDashboard = () => {
                   className={`py-2 px-1 text-xs font-bold rounded-lg transition-all ${
                     mobileColumn === "preparing"
                       ? "bg-brand text-white shadow-sm"
-                      : "text-gray-500 dark:text-gray-405"
+                      : "text-gray-500 dark:text-gray-400"
                   }`}
                 >
                   Kitchen ({preparingOrders.length})
@@ -354,7 +354,7 @@ const ManagerDashboard = () => {
                   className={`py-2 px-1 text-xs font-bold rounded-lg transition-all ${
                     mobileColumn === "ready"
                       ? "bg-emerald-500 text-white shadow-sm"
-                      : "text-gray-500 dark:text-gray-405"
+                      : "text-gray-500 dark:text-gray-400"
                   }`}
                 >
                   Ready ({readyOrders.length})
@@ -364,7 +364,7 @@ const ManagerDashboard = () => {
               <div className="space-y-4">
                 {mobileColumn === "pending" && (
                   pendingOrders.length === 0 ? (
-                    <div className="text-center py-16 bg-white dark:bg-gray-900 rounded-3xl border border-gray-150 dark:border-gray-850 text-gray-400">
+                    <div className="text-center py-16 bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 dark:border-gray-800 text-gray-400">
                       <Inbox className="w-8 h-8 mx-auto mb-2 text-gray-300" />
                       <p className="text-xs">No pending tickets.</p>
                     </div>
@@ -374,7 +374,7 @@ const ManagerDashboard = () => {
                 )}
                 {mobileColumn === "preparing" && (
                   preparingOrders.length === 0 ? (
-                    <div className="text-center py-16 bg-white dark:bg-gray-900 rounded-3xl border border-gray-150 dark:border-gray-850 text-gray-400">
+                    <div className="text-center py-16 bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 dark:border-gray-800 text-gray-400">
                       <ChefHat className="w-8 h-8 mx-auto mb-2 text-gray-300" />
                       <p className="text-xs">No active kitchen preparation.</p>
                     </div>
@@ -384,7 +384,7 @@ const ManagerDashboard = () => {
                 )}
                 {mobileColumn === "ready" && (
                   readyOrders.length === 0 ? (
-                    <div className="text-center py-16 bg-white dark:bg-gray-900 rounded-3xl border border-gray-150 dark:border-gray-850 text-gray-400">
+                    <div className="text-center py-16 bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 dark:border-gray-800 text-gray-400">
                       <CheckCircle2 className="w-8 h-8 mx-auto mb-2 text-gray-300" />
                       <p className="text-xs">No dispatches ready.</p>
                     </div>
@@ -399,7 +399,7 @@ const ManagerDashboard = () => {
           /* Completed Orders tab */
           <div className="space-y-4">
             {completedOrders.length === 0 ? (
-              <div className="text-center py-16 bg-white dark:bg-gray-900 rounded-3xl border border-gray-150 dark:border-gray-800 text-gray-450">
+              <div className="text-center py-16 bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 dark:border-gray-800 text-gray-400">
                 <CheckCircle2 className="w-12 h-12 mx-auto mb-3 stroke-1 text-gray-300" />
                 <h3 className="font-bold text-sm text-gray-700 dark:text-gray-300">No Orders Completed Yet</h3>
                 <p className="text-xs text-gray-400 mt-1 max-w-xs mx-auto leading-relaxed">
@@ -411,14 +411,14 @@ const ManagerDashboard = () => {
                 {completedOrders.map((order) => (
                   <div 
                     key={order.id}
-                    className="p-5 rounded-2xl bg-white dark:bg-gray-900 border border-gray-150 dark:border-gray-800 shadow-sm opacity-80"
+                    className="p-5 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm opacity-80"
                   >
                     <div className="flex justify-between items-start">
                       <div>
                         <span className="text-[10px] font-mono text-gray-400 dark:text-gray-500 font-bold block uppercase">
                           #{order.id.slice(-6)}
                         </span>
-                        <span className="text-[10px] font-semibold text-gray-450 dark:text-gray-500">
+                        <span className="text-[10px] font-semibold text-gray-400 dark:text-gray-500">
                           {new Date(order.timestamp).toLocaleTimeString()}
                         </span>
                       </div>
@@ -429,7 +429,7 @@ const ManagerDashboard = () => {
 
                     <div className="space-y-2 border-y border-gray-100 dark:border-gray-800/60 py-3 my-3">
                       {order.items.map((item, idx) => (
-                        <div key={idx} className="flex justify-between text-xs text-gray-650 dark:text-gray-400">
+                        <div key={idx} className="flex justify-between text-xs text-gray-600 dark:text-gray-400">
                           <div>
                             <span className="font-bold mr-1">x{item.quantity}</span>
                             <span>{item.name}</span>
@@ -439,7 +439,7 @@ const ManagerDashboard = () => {
                     </div>
 
                     <div className="flex justify-between items-center text-xs">
-                      <span className="font-semibold text-gray-450 dark:text-gray-500">Total Price</span>
+                      <span className="font-semibold text-gray-400 dark:text-gray-500">Total Price</span>
                       <span className="font-bold text-gray-900 dark:text-white">₹{order.total.toFixed(2)}</span>
                     </div>
                   </div>

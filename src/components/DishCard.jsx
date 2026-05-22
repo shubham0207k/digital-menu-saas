@@ -113,7 +113,7 @@ const DishCard = ({ dish, onOpenDetails }) => {
             className={`flex items-center justify-center p-2 rounded-xl text-white shadow-md transition-all duration-300 ${
               dish.inStock
                 ? "bg-gradient-to-r from-brand to-brand-dark hover:shadow-brand/20 hover:scale-105 active:scale-95 cursor-pointer"
-                : "bg-gray-400 dark:bg-gray-850 cursor-not-allowed opacity-50"
+                : "bg-gray-400 dark:bg-gray-800 cursor-not-allowed opacity-50"
             }`}
             aria-label="Add to cart"
           >

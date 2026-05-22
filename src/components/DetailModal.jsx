@@ -46,7 +46,7 @@ const DetailModal = ({ dish, onClose }) => {
         </button>
 
         {/* Modal Image Section */}
-        <div className="relative w-full md:w-1/2 aspect-video md:aspect-auto md:min-h-full bg-gray-100 dark:bg-gray-800">
+        <div className="relative w-full md:w-1/2 h-48 md:h-auto md:min-h-full bg-gray-100 dark:bg-gray-800 flex-shrink-0">
           <img
             src={dish.image}
             alt={dish.name}
@@ -105,7 +105,7 @@ const DetailModal = ({ dish, onClose }) => {
 
             {/* Customization Options */}
             {dish.inStock && (
-              <div className="space-y-4 mb-6 pt-4 border-t border-gray-150 dark:border-gray-800">
+              <div className="space-y-4 mb-6 pt-4 border-t border-gray-200 dark:border-gray-800">
                 {/* Spice Level (Standard for asian/spicy items) */}
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-2">
@@ -116,10 +116,10 @@ const DetailModal = ({ dish, onClose }) => {
                       <button
                         key={lvl}
                         onClick={() => setSpice(lvl)}
-                        className={`py-2 rounded-xl text-xs font-semibold uppercase transition-all tracking-wider border cursor-pointer ${
+                        className={`py-3 rounded-xl text-xs font-semibold uppercase transition-all tracking-wider border cursor-pointer ${
                           spice === lvl
                             ? "bg-brand border-brand text-white shadow-md"
-                            : "border-gray-250 dark:border-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                            : "border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                         }`}
                       >
                         {lvl}
@@ -170,14 +170,14 @@ const DetailModal = ({ dish, onClose }) => {
                 <div className="flex items-center rounded-xl bg-gray-100 dark:bg-gray-800 p-1">
                   <button
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                    className="p-2 text-gray-500 hover:text-gray-800 dark:hover:text-white transition-colors"
+                    className="w-11 h-11 flex items-center justify-center text-gray-500 hover:text-gray-800 dark:hover:text-white transition-colors cursor-pointer"
                   >
                     <Minus className="w-4 h-4" />
                   </button>
                   <span className="w-8 text-center text-sm font-bold">{quantity}</span>
                   <button
                     onClick={() => setQuantity((q) => q + 1)}
-                    className="p-2 text-gray-500 hover:text-gray-800 dark:hover:text-white transition-colors"
+                    className="w-11 h-11 flex items-center justify-center text-gray-500 hover:text-gray-800 dark:hover:text-white transition-colors cursor-pointer"
                   >
                     <Plus className="w-4 h-4" />
                   </button>

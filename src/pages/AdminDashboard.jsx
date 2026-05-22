@@ -358,7 +358,7 @@ const AdminDashboard = () => {
     <div className="min-h-screen bg-gray-50 dark:bg-darkbg-DEFAULT text-gray-900 dark:text-white pb-20">
       
       {/* Top dashboard menu bar */}
-      <div className="bg-white/45 dark:bg-gray-900/40 border-b border-gray-150 dark:border-gray-850 px-4 py-6">
+      <div className="bg-white/45 dark:bg-gray-900/40 border-b border-gray-200 dark:border-gray-800 px-4 py-6">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="font-serif text-2xl sm:text-3xl font-bold">Masala Craft Control Center</h1>
@@ -378,8 +378,8 @@ const AdminDashboard = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 flex flex-col lg:flex-row gap-8">
         
         {/* Navigation Tabs (Sidebar style) */}
-        <aside className="lg:w-56 flex-shrink-0">
-          <div className="flex flex-row lg:flex-col overflow-x-auto lg:overflow-x-visible gap-2 p-2 rounded-2xl bg-white/40 dark:bg-gray-900/40 border border-gray-150 dark:border-gray-850 scrollbar-none">
+        <aside className="w-full lg:w-56 flex-shrink-0">
+          <div className="flex flex-row md:grid md:grid-cols-3 lg:flex lg:flex-col overflow-x-auto md:overflow-x-visible lg:overflow-x-visible gap-2 p-2 rounded-2xl bg-white/40 dark:bg-gray-900/40 border border-gray-200 dark:border-gray-800 scrollbar-none">
             {[
               { id: "orders", label: "Orders Queue", icon: ChefHat, count: activeOrdersCount },
               { id: "menu", label: "Menu CRUD", icon: Utensils },
@@ -394,7 +394,7 @@ const AdminDashboard = () => {
                 className={`flex items-center gap-2.5 px-4 py-3 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer relative ${
                   activeTab === tab.id
                     ? "bg-brand text-white shadow-md"
-                    : "text-gray-550 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
+                    : "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
                 }`}
               >
                 <tab.icon className="w-4.5 h-4.5" />
@@ -467,14 +467,14 @@ const AdminDashboard = () => {
                             <div className="space-y-3 mb-4 max-h-48 overflow-y-auto pr-1">
                               {order.items.map((item, idx) => (
                                 <div key={idx} className="text-xs">
-                                  <div className="flex justify-between font-bold text-gray-850 dark:text-gray-200">
+                                  <div className="flex justify-between font-bold text-gray-800 dark:text-gray-200">
                                     <span>{item.name} <span className="text-brand font-black">x{item.quantity}</span></span>
                                     <span>₹{(item.price * item.quantity).toFixed(2)}</span>
                                   </div>
                                   {item.customizations && (
-                                    <div className="pl-3 mt-0.5 text-[9px] text-gray-450 font-medium space-y-0.5">
+                                    <div className="pl-3 mt-0.5 text-[9px] text-gray-400 font-medium space-y-0.5">
                                       <p>• Spice: <span className="uppercase text-brand">{item.customizations.spice}</span></p>
-                                      {item.customizations.notes && <p className="italic text-gray-550">“{item.customizations.notes}”</p>}
+                                      {item.customizations.notes && <p className="italic text-gray-500">“{item.customizations.notes}”</p>}
                                     </div>
                                   )}
                                 </div>
@@ -526,7 +526,7 @@ const AdminDashboard = () => {
                   </div>
 
                   {/* Desktop Table List */}
-                  <div className="rounded-3xl glassmorphism border border-gray-200 dark:border-white/10 overflow-hidden shadow-xl bg-white dark:bg-transparent">
+                  <div className="hidden md:block rounded-3xl glassmorphism border border-gray-200 dark:border-white/10 overflow-hidden shadow-xl bg-white dark:bg-transparent">
                     <div className="overflow-x-auto">
                       <table className="w-full text-left text-xs">
                         <thead className="bg-gray-100/50 dark:bg-gray-900/50 text-[10px] uppercase font-bold text-gray-400 border-b border-gray-200 dark:border-gray-800">
@@ -538,7 +538,7 @@ const AdminDashboard = () => {
                             <th className="px-6 py-4 text-right">Actions</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-150 dark:divide-gray-850 font-medium">
+                        <tbody className="divide-y divide-gray-200 dark:divide-gray-800 font-medium">
                           {dishes.map((dish) => (
                             <tr key={dish.id} className="hover:bg-gray-50/50 dark:hover:bg-white/5">
                               <td className="px-6 py-4 flex items-center gap-3">
@@ -548,12 +548,12 @@ const AdminDashboard = () => {
                                   className="w-10 h-10 object-cover rounded-lg bg-gray-200"
                                 />
                                 <div>
-                                  <p className="font-bold text-gray-950 dark:text-white text-sm">{dish.name}</p>
-                                  <p className="text-[10px] text-gray-450 font-light truncate max-w-xs">{dish.description}</p>
+                                  <p className="font-bold text-gray-900 dark:text-white text-sm">{dish.name}</p>
+                                  <p className="text-[10px] text-gray-400 font-light truncate max-w-xs">{dish.description}</p>
                                 </div>
                               </td>
                               <td className="px-6 py-4 text-gray-500 capitalize">{dish.category}</td>
-                              <td className="px-6 py-4 font-bold text-brand">₹{dish.price.toFixed(2)}</td>
+                              <td className="px-6 py-4 font-bold text-orange-600">₹{dish.price.toFixed(2)}</td>
                               <td className="px-6 py-4">
                                 <button
                                   onClick={() => handleToggleStock(dish)}
@@ -588,6 +588,57 @@ const AdminDashboard = () => {
                       </table>
                     </div>
                   </div>
+
+                  {/* Mobile Stacked Cards List */}
+                  <div className="grid grid-cols-1 gap-4 md:hidden">
+                    {dishes.map((dish) => (
+                      <div key={dish.id} className="p-4 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50 backdrop-blur-sm shadow-sm flex flex-col gap-3">
+                        <div className="flex gap-3">
+                          <img
+                            src={dish.image}
+                            alt={dish.name}
+                            className="w-16 h-16 object-cover rounded-xl bg-gray-100 dark:bg-gray-800 flex-shrink-0"
+                          />
+                          <div className="flex-grow min-w-0">
+                            <div className="flex justify-between items-start gap-2">
+                              <p className="font-bold text-gray-950 dark:text-white text-sm truncate">{dish.name}</p>
+                              <span className="text-[10px] text-gray-400 capitalize font-medium">{dish.category}</span>
+                            </div>
+                            <p className="text-[10px] text-gray-500 dark:text-gray-400 line-clamp-1 mt-0.5">{dish.description}</p>
+                            <p className="font-bold text-brand text-xs mt-1.5">₹{dish.price.toFixed(2)}</p>
+                          </div>
+                        </div>
+                        <div className="flex justify-between items-center pt-3 border-t border-gray-150 dark:border-gray-800/60">
+                          <button
+                            onClick={() => handleToggleStock(dish)}
+                            className={`px-3 py-1.5 rounded-full text-[9px] font-black uppercase tracking-wider cursor-pointer ${
+                              dish.inStock 
+                                ? "bg-green-100 text-green-800 dark:bg-green-950/30 dark:text-green-450" 
+                                : "bg-red-100 text-red-800 dark:bg-red-950/30 dark:text-red-450"
+                            }`}
+                          >
+                            {dish.inStock ? "In Stock" : "Out of Stock"}
+                          </button>
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => openFormModal(dish)}
+                              className="p-2 rounded-xl bg-brand/10 text-brand hover:bg-brand hover:text-white transition-colors cursor-pointer inline-flex"
+                              title="Edit plate"
+                            >
+                              <Edit className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() => handleDeleteDish(dish.id)}
+                              className="p-2 rounded-xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition-colors cursor-pointer inline-flex"
+                              title="Delete plate"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
 
@@ -600,7 +651,7 @@ const AdminDashboard = () => {
                     <h2 className="font-serif text-xl font-bold">Menu Categories</h2>
                     <div className="rounded-3xl glassmorphism border border-gray-200 dark:border-white/10 p-6 shadow-xl space-y-3 bg-white dark:bg-transparent">
                       {categories.map((cat) => (
-                        <div key={cat.id} className="flex justify-between items-center p-3 rounded-xl bg-white/40 dark:bg-gray-900/40 border border-gray-150 dark:border-gray-850">
+                        <div key={cat.id} className="flex justify-between items-center p-3 rounded-xl bg-white/40 dark:bg-gray-900/40 border border-gray-200 dark:border-gray-800">
                           <div className="flex items-center gap-2">
                             <span className="p-2 rounded-lg bg-brand/10 text-brand">
                               <Utensils className="w-4 h-4" />
@@ -641,7 +692,7 @@ const AdminDashboard = () => {
                           value={newCatName}
                           onChange={(e) => setNewCatName(e.target.value)}
                           placeholder="e.g. Rice Specials"
-                          className="w-full px-4 py-2.5 rounded-xl border border-gray-250 dark:border-gray-800 bg-transparent text-xs focus:ring-1 focus:ring-brand focus:border-brand outline-none"
+                          className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent text-xs focus:ring-1 focus:ring-brand focus:border-brand outline-none"
                           required
                         />
                       </div>
@@ -653,7 +704,7 @@ const AdminDashboard = () => {
                         <select
                           value={newCatIcon}
                           onChange={(e) => setNewCatIcon(e.target.value)}
-                          className="w-full px-4 py-2.5 rounded-xl border border-gray-250 dark:border-gray-800 bg-transparent text-xs focus:ring-1 focus:ring-brand focus:border-brand dark:bg-gray-900 outline-none"
+                          className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent text-xs focus:ring-1 focus:ring-brand focus:border-brand dark:bg-gray-900 outline-none"
                         >
                           <option value="Utensils">Fork & Spoon (Utensils)</option>
                           <option value="Salad">Salad Bowl (Salad)</option>
@@ -688,17 +739,18 @@ const AdminDashboard = () => {
                         </div>
                       ) : (
                         managers.map((staff) => (
-                          <div key={staff.uid} className="flex justify-between items-center p-3.5 rounded-xl bg-white/40 dark:bg-gray-900/40 border border-gray-150 dark:border-gray-850">
+                          <div key={staff.uid} className="flex flex-col sm:flex-row sm:items-center justify-between p-3.5 rounded-xl bg-white/40 dark:bg-gray-900/40 border border-gray-200 dark:border-gray-800 gap-3">
                             <div>
                               <p className="text-sm font-bold text-gray-800 dark:text-white">{staff.displayName}</p>
-                              <p className="text-[10px] text-gray-450 mt-0.5">{staff.email}</p>
+                              <p className="text-[10px] text-gray-400 mt-0.5">{staff.email}</p>
                             </div>
                             <button
                               onClick={() => handleDeleteManager(staff.uid)}
-                              className="p-1.5 rounded-lg hover:bg-red-500/10 text-gray-400 hover:text-red-500 transition-colors cursor-pointer"
+                              className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-3 py-2 sm:p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white sm:bg-transparent sm:text-gray-400 sm:hover:bg-red-500/15 transition-all text-xs font-bold cursor-pointer"
                               title="Delete staff account"
                             >
                               <Trash2 className="w-4 h-4" />
+                              <span className="sm:hidden">Delete Manager</span>
                             </button>
                           </div>
                         ))
@@ -722,7 +774,7 @@ const AdminDashboard = () => {
                             value={newManagerName}
                             onChange={(e) => setNewManagerName(e.target.value)}
                             placeholder="e.g. Sarah Connor"
-                            className="w-full pl-9 pr-4 py-2 rounded-xl border border-gray-250 dark:border-gray-800 bg-transparent text-xs focus:ring-1 focus:ring-brand focus:border-brand outline-none"
+                            className="w-full pl-9 pr-4 py-2 rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent text-xs focus:ring-1 focus:ring-brand focus:border-brand outline-none"
                             required
                           />
                         </div>
@@ -739,7 +791,7 @@ const AdminDashboard = () => {
                             value={newManagerEmail}
                             onChange={(e) => setNewManagerEmail(e.target.value)}
                             placeholder="manager@restaurant.com"
-                            className="w-full pl-9 pr-4 py-2 rounded-xl border border-gray-250 dark:border-gray-800 bg-transparent text-xs focus:ring-1 focus:ring-brand focus:border-brand outline-none"
+                            className="w-full pl-9 pr-4 py-2 rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent text-xs focus:ring-1 focus:ring-brand focus:border-brand outline-none"
                             required
                           />
                         </div>
@@ -756,7 +808,7 @@ const AdminDashboard = () => {
                             value={newManagerPassword}
                             onChange={(e) => setNewManagerPassword(e.target.value)}
                             placeholder="Min. 6 characters"
-                            className="w-full pl-9 pr-4 py-2 rounded-xl border border-gray-250 dark:border-gray-800 bg-transparent text-xs focus:ring-1 focus:ring-brand focus:border-brand outline-none"
+                            className="w-full pl-9 pr-4 py-2 rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent text-xs focus:ring-1 focus:ring-brand focus:border-brand outline-none"
                             required
                           />
                         </div>
@@ -794,7 +846,7 @@ const AdminDashboard = () => {
                           value={qrTable}
                           onChange={(e) => setQrTable(e.target.value)}
                           placeholder="e.g. 5"
-                          className="w-full px-4 py-2.5 rounded-xl border border-gray-250 dark:border-gray-800 bg-transparent text-sm font-bold focus:ring-1 focus:ring-brand focus:border-brand outline-none"
+                          className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent text-sm font-bold focus:ring-1 focus:ring-brand focus:border-brand outline-none"
                           min="1"
                         />
                       </div>
@@ -833,13 +885,13 @@ const AdminDashboard = () => {
                             <span className="text-3xl font-serif font-black text-brand">TABLE {qrTable}</span>
                           </div>
                           
-                          <p className="text-[10px] text-gray-550 max-w-[200px] leading-relaxed">
+                          <p className="text-[10px] text-gray-500 dark:text-gray-400 max-w-[200px] leading-relaxed">
                             Scan with your smartphone camera to browse, customize, and order instantly.
                           </p>
                         </div>
                       </div>
                     ) : (
-                      <div className="p-10 text-center rounded-3xl border border-dashed border-gray-300 dark:border-gray-800 text-gray-450 max-w-sm w-full flex flex-col items-center justify-center py-16">
+                      <div className="p-10 text-center rounded-3xl border border-dashed border-gray-300 dark:border-gray-800 text-gray-400 max-w-sm w-full flex flex-col items-center justify-center py-16">
                         <QrCode className="w-16 h-16 stroke-1 text-gray-400 mb-2 opacity-50" />
                         <h4 className="font-bold text-xs uppercase tracking-wider">Preview Card Empty</h4>
                         <p className="text-[10px] text-gray-500 mt-1 max-w-[200px] leading-relaxed">
@@ -856,40 +908,40 @@ const AdminDashboard = () => {
                 <div className="space-y-8 animate-fade-in">
                   <h2 className="font-serif text-xl font-bold">Analytics Panel</h2>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                    <div className="p-6 rounded-3xl glassmorphism border border-gray-250 dark:border-white/10 shadow-lg flex items-start gap-4 bg-white dark:bg-transparent">
-                      <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-500">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                    <div className="p-5 sm:p-6 rounded-3xl glassmorphism border border-gray-200 dark:border-white/10 shadow-lg flex items-start gap-4 bg-white dark:bg-transparent">
+                      <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 flex-shrink-0">
                         <IndianRupee className="w-6 h-6" />
                       </div>
                       <div>
                         <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block">Settled Gross</span>
-                        <span className="text-2xl font-serif font-bold text-emerald-500">₹{totalRevenue.toFixed(2)}</span>
+                        <span className="text-xl sm:text-2xl font-serif font-bold text-emerald-500">₹{totalRevenue.toFixed(2)}</span>
                       </div>
                     </div>
 
-                    <div className="p-6 rounded-3xl glassmorphism border border-gray-250 dark:border-white/10 shadow-lg flex items-start gap-4 bg-white dark:bg-transparent">
-                      <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-500">
+                    <div className="p-5 sm:p-6 rounded-3xl glassmorphism border border-gray-200 dark:border-white/10 shadow-lg flex items-start gap-4 bg-white dark:bg-transparent">
+                      <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-500 flex-shrink-0">
                         <RefreshCw className="w-6 h-6 animate-spin" style={{ animationDuration: '6s' }} />
                       </div>
                       <div>
                         <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block">Active Ticket Value</span>
-                        <span className="text-2xl font-serif font-bold text-amber-500">₹{pendingRevenue.toFixed(2)}</span>
+                        <span className="text-xl sm:text-2xl font-serif font-bold text-amber-500">₹{pendingRevenue.toFixed(2)}</span>
                       </div>
                     </div>
 
-                    <div className="p-6 rounded-3xl glassmorphism border border-gray-250 dark:border-white/10 shadow-lg flex items-start gap-4 bg-white dark:bg-transparent">
-                      <div className="p-3.5 rounded-2xl bg-brand/10 border border-brand/20 text-brand">
+                    <div className="p-5 sm:p-6 rounded-3xl glassmorphism border border-gray-200 dark:border-white/10 shadow-lg flex items-start gap-4 bg-white dark:bg-transparent">
+                      <div className="p-3.5 rounded-2xl bg-brand/10 border border-brand/20 text-brand flex-shrink-0">
                         <ShoppingBag className="w-6 h-6" />
                       </div>
                       <div>
                         <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block">Orders Placed</span>
-                        <span className="text-2xl font-serif font-bold text-brand">{orders.length}</span>
+                        <span className="text-xl sm:text-2xl font-serif font-bold text-brand">{orders.length}</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="p-6 rounded-3xl glassmorphism border border-gray-250 dark:border-white/10 shadow-xl bg-white dark:bg-transparent space-y-4">
-                    <h3 className="text-xs font-bold uppercase tracking-widest text-gray-450 dark:text-gray-500">
+                  <div className="p-6 rounded-3xl glassmorphism border border-gray-200 dark:border-white/10 shadow-xl bg-white dark:bg-transparent space-y-4">
+                    <h3 className="text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
                       Ticket Distribution Status
                     </h3>
                     
@@ -901,14 +953,14 @@ const AdminDashboard = () => {
                           <div key={status} className="space-y-1">
                             <div className="flex justify-between items-center text-xs font-semibold">
                               <span className="capitalize">{status}</span>
-                              <span className="text-gray-455">{count} orders ({Math.round(percentage)}%)</span>
+                              <span className="text-gray-600">{count} orders ({Math.round(percentage)}%)</span>
                             </div>
                             <div className="h-2.5 rounded-full bg-gray-200 dark:bg-gray-800 overflow-hidden">
                               <div 
                                 className={`h-full rounded-full transition-all duration-500 ${
                                   status === "pending" ? "bg-amber-500" :
                                   status === "preparing" ? "bg-blue-500" :
-                                  status === "ready" ? "bg-indigo-550" :
+                                  status === "ready" ? "bg-indigo-600" :
                                   "bg-emerald-500"
                                 }`}
                                 style={{ width: `${percentage}%` }}
@@ -929,15 +981,15 @@ const AdminDashboard = () => {
       {/* --- ADD / EDIT MENU ITEM MODAL WITH PROGRESS UPLOADER --- */}
       {showItemModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md">
-          <div className="relative w-full max-w-lg rounded-3xl glassmorphism text-gray-900 dark:text-white shadow-2xl p-6 sm:p-8 max-h-[90vh] overflow-y-auto border border-white/10 flex flex-col justify-between">
+          <div className="relative w-full max-w-lg rounded-3xl glassmorphism text-gray-900 dark:text-white shadow-2xl p-6 sm:p-8 max-h-[85vh] overflow-y-auto border border-white/10 flex flex-col justify-between">
             
-            <div className="flex justify-between items-center pb-4 border-b border-gray-150 dark:border-gray-850">
-              <h3 className="font-serif text-lg font-bold text-gray-850 dark:text-white">
+            <div className="flex justify-between items-center pb-4 border-b border-gray-200 dark:border-gray-800">
+              <h3 className="font-serif text-lg font-bold text-gray-800 dark:text-white">
                 {editingItem ? `Edit Details: ${editingItem.name}` : "Create Menu Plate"}
               </h3>
               <button
                 onClick={() => setShowItemModal(false)}
-                className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-405 hover:text-gray-900 dark:hover:text-white"
+                className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-400 hover:text-gray-900 dark:hover:text-white"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -946,37 +998,37 @@ const AdminDashboard = () => {
             <form onSubmit={handleFormSubmit} className="space-y-4 mt-6">
               
               <div className="space-y-1">
-                <label className="block text-[10px] font-bold uppercase tracking-widest text-gray-450">Dish Title *</label>
+                <label className="block text-[10px] font-bold uppercase tracking-widest text-gray-400">Dish Title *</label>
                 <input
                   type="text"
                   value={itemName}
                   onChange={(e) => setItemName(e.target.value)}
                   placeholder="e.g. Garlic Butter Naan"
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-250 dark:border-gray-800 bg-transparent text-xs focus:ring-1 focus:ring-brand focus:border-brand outline-none"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent text-xs focus:ring-1 focus:ring-brand focus:border-brand outline-none"
                   required
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="block text-[10px] font-bold uppercase tracking-widest text-gray-450">Price (₹) *</label>
+                  <label className="block text-[10px] font-bold uppercase tracking-widest text-gray-400">Price (₹) *</label>
                   <input
                     type="number"
                     step="0.01"
                     value={itemPrice}
                     onChange={(e) => setItemPrice(e.target.value)}
                     placeholder="e.g. 150.00"
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-250 dark:border-gray-800 bg-transparent text-xs focus:ring-1 focus:ring-brand focus:border-brand outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent text-xs focus:ring-1 focus:ring-brand focus:border-brand outline-none"
                     required
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="block text-[10px] font-bold uppercase tracking-widest text-gray-450">Category *</label>
+                  <label className="block text-[10px] font-bold uppercase tracking-widest text-gray-400">Category *</label>
                   <select
                     value={itemCategory}
                     onChange={(e) => setItemCategory(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-255 dark:border-gray-800 bg-transparent text-xs focus:ring-1 focus:ring-brand focus:border-brand dark:bg-gray-900 outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent text-xs focus:ring-1 focus:ring-brand focus:border-brand dark:bg-gray-900 outline-none"
                     required
                   >
                     {categories.map((c) => (
@@ -987,36 +1039,36 @@ const AdminDashboard = () => {
               </div>
 
               <div className="space-y-1">
-                <label className="block text-[10px] font-bold uppercase tracking-widest text-gray-450">Description</label>
+                <label className="block text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">Description</label>
                 <textarea
                   value={itemDescription}
                   onChange={(e) => setItemDescription(e.target.value)}
                   placeholder="Describe ingredients, cooking styles, flavors..."
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-250 dark:border-gray-800 bg-transparent text-xs focus:ring-1 focus:ring-brand focus:border-brand outline-none h-16 resize-none"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent text-xs focus:ring-1 focus:ring-brand focus:border-brand outline-none h-16 resize-none"
                 ></textarea>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="block text-[10px] font-bold uppercase tracking-widest text-gray-450">Calories (kcal)</label>
+                  <label className="block text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">Calories (kcal)</label>
                   <input
                     type="number"
                     value={itemCalories}
                     onChange={(e) => setItemCalories(e.target.value)}
                     placeholder="e.g. 350"
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-250 dark:border-gray-800 bg-transparent text-xs focus:ring-1 focus:ring-brand focus:border-brand outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent text-xs focus:ring-1 focus:ring-brand focus:border-brand outline-none"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="block text-[10px] font-bold uppercase tracking-widest text-gray-450 font-semibold">Image / Upload</label>
+                  <label className="block text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 font-semibold">Image / Upload</label>
                   <div className="flex gap-2">
                     <input
                       type="text"
                       value={itemImage}
                       onChange={(e) => setItemImage(e.target.value)}
                       placeholder="/assets/butter_chicken.png"
-                      className="flex-grow px-3 py-2 rounded-xl border border-gray-250 dark:border-gray-800 bg-transparent text-[10px] focus:ring-1 focus:ring-brand focus:border-brand outline-none"
+                      className="flex-grow px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent text-[10px] focus:ring-1 focus:ring-brand focus:border-brand outline-none"
                     />
                     <label className="px-3 py-2 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-brand dark:hover:border-brand rounded-xl text-[10px] font-bold text-gray-500 dark:text-gray-400 hover:text-brand flex items-center justify-center cursor-pointer transition-all">
                       <Upload className="w-3.5 h-3.5" />
@@ -1043,7 +1095,7 @@ const AdminDashboard = () => {
               </div>
 
               <div className="space-y-1.5">
-                <label className="block text-[10px] font-bold uppercase tracking-widest text-gray-455">Dietary Badges</label>
+                <label className="block text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">Dietary Badges</label>
                 <div className="flex flex-wrap gap-2">
                   {["Vegetarian", "Vegan", "Spicy", "Gluten-Free"].map((tag) => {
                     const hasTag = itemTags.includes(tag);
@@ -1055,7 +1107,7 @@ const AdminDashboard = () => {
                         className={`px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all border ${
                           hasTag
                             ? "bg-brand/10 border-brand text-brand"
-                            : "border-gray-250 dark:border-gray-850 text-gray-400"
+                            : "border-gray-200 dark:border-gray-800 text-gray-400"
                         }`}
                       >
                         {tag} {hasTag ? "✓" : "+"}
@@ -1065,11 +1117,11 @@ const AdminDashboard = () => {
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-gray-150 dark:border-gray-850 flex gap-4 mt-6">
+              <div className="pt-4 border-t border-gray-200 dark:border-gray-800 flex gap-4 mt-6">
                 <button
                   type="button"
                   onClick={() => setShowItemModal(false)}
-                  className="flex-grow py-2.5 rounded-xl border border-gray-250 dark:border-gray-800 text-xs font-bold hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-655 dark:text-gray-300 transition-colors cursor-pointer"
+                  className="flex-grow py-2.5 rounded-xl border border-gray-200 dark:border-gray-800 text-xs font-bold hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>

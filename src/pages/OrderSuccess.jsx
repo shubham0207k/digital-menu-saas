@@ -119,14 +119,14 @@ const OrderSuccess = () => {
             <CheckCircle2 className="w-12 h-12 stroke-[1.5]" />
           </div>
           <h1 className="font-serif text-3xl sm:text-4xl font-bold">Order Placed Successfully!</h1>
-          <p className="text-xs text-gray-550 dark:text-gray-400 max-w-md mx-auto">
+          <p className="text-xs text-gray-500 dark:text-gray-400 max-w-md mx-auto">
             Your ticket is sent to the kitchen. Lay back, relax, and track your dish progress.
           </p>
         </div>
 
         {/* Live Status Tracker */}
         <div className="p-6 sm:p-8 rounded-3xl glassmorphism border border-white/10 shadow-xl space-y-6">
-          <h3 className="text-xs font-bold uppercase tracking-widest text-gray-450 dark:text-gray-500 text-center flex items-center justify-center gap-1.5">
+          <h3 className="text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 text-center flex items-center justify-center gap-1.5">
             <Clock className="w-4 h-4 text-brand animate-pulse" /> Live Kitchen Pipeline
           </h3>
 
@@ -151,7 +151,7 @@ const OrderSuccess = () => {
               >
                 <BellRing className="w-4.5 h-4.5" />
               </div>
-              <span className={`text-[10px] font-bold uppercase tracking-wider ${currentStep >= 1 ? "text-brand" : "text-gray-405"}`}>
+              <span className={`text-[10px] font-bold uppercase tracking-wider ${currentStep >= 1 ? "text-brand" : "text-gray-400"}`}>
                 Received
               </span>
             </div>
@@ -162,12 +162,12 @@ const OrderSuccess = () => {
                 className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
                   currentStep >= 2 
                     ? "bg-brand text-white shadow-md shadow-brand/20 scale-105" 
-                    : "bg-gray-200 dark:bg-gray-800 text-gray-405"
+                    : "bg-gray-200 dark:bg-gray-800 text-gray-400"
                 }`}
               >
                 <ChefHat className="w-4.5 h-4.5" />
               </div>
-              <span className={`text-[10px] font-bold uppercase tracking-wider ${currentStep >= 2 ? "text-brand" : "text-gray-405"}`}>
+              <span className={`text-[10px] font-bold uppercase tracking-wider ${currentStep >= 2 ? "text-brand" : "text-gray-400"}`}>
                 Preparing
               </span>
             </div>
@@ -237,7 +237,7 @@ const OrderSuccess = () => {
             </div>
 
             {/* Totals calculation */}
-            <div className="pt-4 border-t border-gray-150 dark:border-gray-850 space-y-1.5 text-xs text-gray-500 dark:text-gray-400">
+            <div className="pt-4 border-t border-gray-200 dark:border-gray-800 space-y-1.5 text-xs text-gray-500 dark:text-gray-400">
               <div className="flex justify-between">
                 <span>Subtotal</span>
                 <span>₹{order.subtotal.toFixed(2)}</span>
@@ -246,7 +246,7 @@ const OrderSuccess = () => {
                 <span>Tax (8%)</span>
                 <span>₹{order.tax.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between text-sm font-bold text-gray-900 dark:text-white pt-2 border-t border-gray-150 dark:border-gray-800">
+              <div className="flex justify-between text-sm font-bold text-gray-900 dark:text-white pt-2 border-t border-gray-200 dark:border-gray-800">
                 <span>Paid</span>
                 <span className="text-brand">₹{order.total.toFixed(2)}</span>
               </div>
@@ -260,7 +260,7 @@ const OrderSuccess = () => {
                 <MapPin className="w-4 h-4 text-brand" /> Table Location
               </h3>
               
-              <div className="py-6 flex flex-col items-center justify-center text-center rounded-2xl bg-gray-100/40 dark:bg-gray-900/40 border border-gray-150 dark:border-gray-850">
+              <div className="py-6 flex flex-col items-center justify-center text-center rounded-2xl bg-gray-100/40 dark:bg-gray-900/40 border border-gray-200 dark:border-gray-800">
                 <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">Delivering To</span>
                 <span className="text-4xl font-serif font-black text-brand mt-1.5">Table {order.tableNumber}</span>
               </div>
@@ -268,7 +268,7 @@ const OrderSuccess = () => {
 
             <div className="space-y-2 pt-4">
               <p className="text-[10px] text-gray-400 text-center leading-relaxed">
-                Order ID: <span className="font-mono font-bold uppercase select-all text-gray-655 dark:text-gray-200">{order.id}</span>
+                Order ID: <span className="font-mono font-bold uppercase select-all text-gray-600 dark:text-gray-200">{order.id}</span>
               </p>
               <Link
                 to="/menu"

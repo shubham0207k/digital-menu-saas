@@ -51,7 +51,7 @@ const AdminLogin = () => {
             <UtensilsCrossed className="w-8 h-8" />
           </div>
           <h2 className="font-serif text-3xl font-bold tracking-tight">Restaurant Portal</h2>
-          <p className="text-xs text-gray-550 dark:text-gray-400 mt-1.5 font-light">
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1.5 font-light">
             Authenticate to access dashboard controls.
           </p>
         </div>

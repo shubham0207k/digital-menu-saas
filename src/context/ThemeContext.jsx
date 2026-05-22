@@ -4,7 +4,10 @@ const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem("theme") || "dark"; // Default to premium dark mode
+    const saved = localStorage.getItem("theme");
+    if (saved) return saved;
+    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    return systemPrefersDark ? "dark" : "light";
   });
 
   useEffect(() => {
@@ -16,6 +19,20 @@ export const ThemeProvider = ({ children }) => {
     }
     localStorage.setItem("theme", theme);
   }, [theme]);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const handleChange = (e) => {
+      if (!localStorage.getItem("theme")) {
+        setTheme(e.matches ? "dark" : "light");
+      }
+    };
+    
+    mediaQuery.addEventListener("change", handleChange);
+    return () => {
+      mediaQuery.removeEventListener("change", handleChange);
+    };
+  }, []);
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));

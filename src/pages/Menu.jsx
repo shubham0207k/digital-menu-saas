@@ -37,6 +37,7 @@ const Menu = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedTags, setSelectedTags] = useState([]);
   const [selectedDish, setSelectedDish] = useState(null);
+  const [isFilterExpanded, setIsFilterExpanded] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -92,7 +93,7 @@ const Menu = () => {
     <div className="min-h-screen bg-gray-50 dark:bg-darkbg-DEFAULT text-gray-900 dark:text-white pb-20">
       
       {/* Page Header */}
-      <div className="relative overflow-hidden bg-white/40 dark:bg-gray-900/40 border-b border-gray-150 dark:border-gray-850 px-4 py-8 sm:py-12">
+      <div className="relative overflow-hidden bg-white/40 dark:bg-gray-900/40 border-b border-gray-200 dark:border-gray-800 px-4 py-8 sm:py-12">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-6 relative z-10">
           <div className="space-y-2">
             <h1 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight">Our Signature Menu</h1>
@@ -109,7 +110,7 @@ const Menu = () => {
               placeholder="Search dishes, ingredients..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-11 pr-5 py-3 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-850 text-sm focus:ring-1 focus:ring-brand focus:border-brand outline-none shadow-sm transition-all"
+              className="w-full pl-11 pr-5 py-3 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-sm focus:ring-1 focus:ring-brand focus:border-brand outline-none shadow-sm transition-all"
             />
           </div>
         </div>
@@ -118,10 +119,10 @@ const Menu = () => {
       {/* Main Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 flex flex-col lg:flex-row gap-8">
         
-        {/* Left side filters (Desktop) */}
-        <aside className="lg:w-64 flex-shrink-0 space-y-6">
+        {/* Left side filters (Desktop & Mobile Collapsible) */}
+        <aside className="lg:w-64 flex-shrink-0 space-y-4">
           {/* Categories Sidebar */}
-          <div className="p-6 rounded-3xl glassmorphism border border-white/10 space-y-4">
+          <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl glassmorphism border border-white/10 space-y-4">
             <h3 className="text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 flex items-center gap-1.5">
               <Filter className="w-4 h-4" /> Categories
             </h3>
@@ -155,41 +156,60 @@ const Menu = () => {
             </div>
           </div>
 
-          {/* Diet filters */}
-          <div className="p-6 rounded-3xl glassmorphism border border-white/10 space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
-              Dietary Filters
-            </h3>
-            <div className="flex flex-wrap lg:flex-col gap-2">
-              {["Vegetarian", "Vegan", "Spicy", "Gluten-Free"].map((tag) => {
-                const isActive = selectedTags.includes(tag);
-                return (
-                  <button
-                    key={tag}
-                    onClick={() => toggleTagFilter(tag)}
-                    className={`px-4 py-2.5 rounded-xl text-xs font-semibold transition-all border text-left cursor-pointer flex items-center justify-between ${
-                      isActive
-                        ? "border-brand bg-brand/10 text-brand"
-                        : "border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                    }`}
-                  >
-                    <span>{tag}</span>
-                    {isActive && <span className="text-[10px] font-bold">✓</span>}
-                  </button>
-                );
-              })}
-            </div>
+          {/* Collapsible Mobile Toggle for Diet Filters */}
+          <div className="lg:hidden p-4 rounded-2xl glassmorphism border border-white/10 flex items-center justify-between">
+            <button
+              onClick={() => setIsFilterExpanded(!isFilterExpanded)}
+              className="flex items-center gap-2 text-xs font-bold text-gray-700 dark:text-gray-300 w-full justify-between cursor-pointer"
+            >
+              <span className="flex items-center gap-1.5">
+                <Filter className="w-4 h-4 text-brand" /> 
+                <span>Dietary Preferences</span>
+              </span>
+              <span className="text-[10px] uppercase font-bold tracking-wider text-brand">
+                {isFilterExpanded ? "Hide" : "Show"}
+              </span>
+            </button>
           </div>
 
-          {/* Clear Button if filter active */}
-          {(selectedCategory !== "all" || searchQuery || selectedTags.length > 0) && (
-            <button
-              onClick={clearFilters}
-              className="w-full py-2.5 px-4 rounded-xl border border-dashed border-red-500/30 hover:bg-red-500/10 text-red-500 text-xs font-bold transition-all cursor-pointer"
-            >
-              Reset All Filters
-            </button>
-          )}
+          {/* Collapsible Content */}
+          <div className={`${isFilterExpanded ? "block animate-fade-in" : "hidden lg:block"} space-y-4`}>
+            {/* Diet filters */}
+            <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl glassmorphism border border-white/10 space-y-3">
+              <h3 className="text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
+                Dietary Filters
+              </h3>
+              <div className="flex flex-wrap lg:flex-col gap-2">
+                {["Vegetarian", "Vegan", "Spicy", "Gluten-Free"].map((tag) => {
+                  const isActive = selectedTags.includes(tag);
+                  return (
+                    <button
+                      key={tag}
+                      onClick={() => toggleTagFilter(tag)}
+                      className={`px-4 py-2.5 rounded-xl text-xs font-semibold transition-all border text-left cursor-pointer flex items-center justify-between ${
+                        isActive
+                          ? "border-brand bg-brand/10 text-brand"
+                          : "border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                      }`}
+                    >
+                      <span>{tag}</span>
+                      {isActive && <span className="text-[10px] font-bold">✓</span>}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Clear Button if filter active */}
+            {(selectedCategory !== "all" || searchQuery || selectedTags.length > 0) && (
+              <button
+                onClick={clearFilters}
+                className="w-full py-2.5 px-4 rounded-xl border border-dashed border-red-500/30 hover:bg-red-500/10 text-red-500 text-xs font-bold transition-all cursor-pointer"
+              >
+                Reset All Filters
+              </button>
+            )}
+          </div>
         </aside>
 
         {/* Right side Menu Grid */}
@@ -202,9 +222,9 @@ const Menu = () => {
 
           {loading ? (
             /* Skeleton Loading State */
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="rounded-2xl border border-gray-200 dark:border-gray-850 overflow-hidden flex flex-col h-[400px]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+              {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                <div key={i} className="rounded-2xl border border-gray-200 dark:border-gray-800 overflow-hidden flex flex-col h-[400px]">
                   <div className="aspect-[4/3] w-full shimmer-loader"></div>
                   <div className="p-5 flex-grow flex flex-col justify-between">
                     <div className="space-y-3">
@@ -237,7 +257,7 @@ const Menu = () => {
             </div>
           ) : (
             /* Active dish list */
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
               {filteredDishes.map((dish) => (
                 <DishCard
                   key={dish.id}

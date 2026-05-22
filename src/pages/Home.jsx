@@ -43,7 +43,7 @@ const Home = () => {
         </div>
 
         {/* Table Selection / Browse CTA */}
-        <div className="max-w-md mx-auto p-8 rounded-3xl glassmorphism shadow-2xl space-y-6 border border-gray-250/20">
+        <div className="max-w-md mx-auto p-8 rounded-3xl glassmorphism shadow-2xl space-y-6 border border-gray-200/20 dark:border-white/10">
           <h3 className="font-serif text-lg font-bold">Ready to Order?</h3>
           
           <form onSubmit={handleStartBrowsing} className="space-y-4">
@@ -56,7 +56,7 @@ const Home = () => {
                 value={inputTable}
                 onChange={(e) => setInputTable(e.target.value)}
                 placeholder="e.g. 12"
-                className="w-full px-5 py-3 rounded-xl border border-gray-255 dark:border-gray-800 bg-transparent text-sm focus:ring-1 focus:ring-brand focus:border-brand outline-none transition-all text-center font-bold text-lg"
+                className="w-full px-5 py-3 rounded-xl border border-gray-300 dark:border-gray-800 bg-transparent text-sm focus:ring-1 focus:ring-brand focus:border-brand outline-none transition-all text-center font-bold text-lg text-gray-900 dark:text-white"
               />
             </div>
 
