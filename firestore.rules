@@ -1,0 +1,63 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+    
+    function isAdmin() {
+      return isSignedIn() && 
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) && 
+        getUserData().role == 'admin';
+    }
+    
+    function isManager() {
+      return isSignedIn() && 
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) && 
+        (getUserData().role == 'manager' || getUserData().role == 'admin');
+    }
+
+    // Users collection rules
+    match /users/{userId} {
+      // A user can read/write their own user doc (e.g. self-signup or profile update)
+      allow read, write: if isSignedIn() && request.auth.uid == userId;
+      // Admins can read/write everything in users
+      allow read, write: if isAdmin();
+      // Managers can read staff users (managers list)
+      allow read: if isManager();
+    }
+
+    // Categories rules
+    match /categories/{categoryId} {
+      // Anyone (including anonymous customers scanning QR code) can read categories
+      allow read: if true;
+      // Only Admin can write categories
+      allow write: if isAdmin();
+    }
+
+    // Menu items rules
+    match /menu_items/{itemId} {
+      // Anyone (including anonymous customers scanning QR code) can read menu items
+      allow read: if true;
+      // Only Admin can write menu items
+      allow write: if isAdmin();
+    }
+
+    // Orders rules
+    match /orders/{orderId} {
+      // Anyone can create an order (since customers may scan and order without registration, or authenticated customers)
+      allow create: if true;
+      // Managers and Admins can read/update/delete all orders
+      allow read, write: if isManager();
+      // Customers/guests can read their own order for receipt pages
+      allow get: if true; 
+      allow list: if isManager();
+    }
+  }
+}

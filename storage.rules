@@ -1,0 +1,29 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isSignedIn() && 
+        firestore.exists(/databases/(default)/documents/users/$(request.auth.uid)) && 
+        firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    match /menu/{allPaths=**} {
+      // Anyone can read/download images
+      allow read: if true;
+      // Only admins can upload/delete images
+      allow write: if isAdmin();
+    }
+    
+    // Fallback rule for all other files
+    match /{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}
