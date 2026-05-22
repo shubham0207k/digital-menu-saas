@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
     const unsubscribe = authService.onAuthStateChanged(async (currentUser) => {
       if (currentUser) {
         try {
-          const profile = await authService.getUserProfile(currentUser.uid);
+          const profile = await authService.getUserProfile(currentUser.uid, currentUser);
           setUser(profile ? { ...currentUser, ...profile } : currentUser);
         } catch (error) {
           console.error("Failed to load user profile:", error);
@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     try {
       const loggedUser = await authService.login(email, password);
-      const profile = await authService.getUserProfile(loggedUser.uid);
+      const profile = await authService.getUserProfile(loggedUser.uid, loggedUser);
       const fullUser = profile ? { ...loggedUser, ...profile } : loggedUser;
       setUser(fullUser);
       return fullUser;

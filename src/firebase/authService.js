@@ -10,6 +10,17 @@ import { initializeApp, deleteApp } from "firebase/app";
 import { auth, db, isMock } from "./config";
 import firebaseConfig from "./config";
 
+const getRoleByEmail = (email) => {
+  const normalizedEmail = email?.toLowerCase();
+  if (normalizedEmail === "admin@restaurant.com") {
+    return "admin";
+  }
+  if (normalizedEmail === "manager@restaurant.com") {
+    return "manager";
+  }
+  return "customer";
+};
+
 // Mock Users seed
 const DEFAULT_MOCK_USERS = [
   {
@@ -71,6 +82,7 @@ export const authService = {
   },
 
   register: async (name, email, password, role = "customer") => {
+    const assignedRole = getRoleByEmail(email) || role;
     if (isMock) {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -83,13 +95,14 @@ export const authService = {
             uid: "mock-" + Date.now(),
             email: email.toLowerCase(),
             password,
-            role,
-            displayName: name
+            role: assignedRole,
+            displayName: name,
+            name: name
           };
           mockUsers.push(newUser);
           localStorage.setItem("mock_users", JSON.stringify(mockUsers));
           
-          if (role === "customer") {
+          if (assignedRole === "customer") {
             mockCurrentUser = newUser;
             localStorage.setItem("mock_user", JSON.stringify(newUser));
             triggerCallbacks(newUser);
@@ -104,8 +117,9 @@ export const authService = {
       const profile = {
         uid: user.uid,
         email: email.toLowerCase(),
+        name: name,
         displayName: name,
-        role,
+        role: assignedRole,
         createdAt: new Date().toISOString()
       };
       await setDoc(doc(db, "users", user.uid), profile);
@@ -114,6 +128,7 @@ export const authService = {
   },
 
   registerSecondary: async (name, email, password, role) => {
+    const assignedRole = getRoleByEmail(email) || role;
     if (isMock) {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -126,8 +141,9 @@ export const authService = {
             uid: "mock-" + Date.now(),
             email: email.toLowerCase(),
             password,
-            role,
-            displayName: name
+            role: assignedRole,
+            displayName: name,
+            name: name
           };
           mockUsers.push(newUser);
           localStorage.setItem("mock_users", JSON.stringify(mockUsers));
@@ -146,8 +162,9 @@ export const authService = {
         const profile = {
           uid: user.uid,
           email: email.toLowerCase(),
+          name: name,
           displayName: name,
-          role,
+          role: assignedRole,
           createdAt: new Date().toISOString()
         };
         await setDoc(doc(db, "users", user.uid), profile);
@@ -181,14 +198,42 @@ export const authService = {
     return auth?.currentUser || null;
   },
 
-  getUserProfile: async (uid) => {
+  getUserProfile: async (uid, fallbackUser = null) => {
     if (isMock) {
       const mockUsers = JSON.parse(localStorage.getItem("mock_users") || "[]");
       const user = mockUsers.find(u => u.uid === uid);
       return user || null;
     } else {
-      const userDoc = await getDoc(doc(db, "users", uid));
-      return userDoc.exists() ? userDoc.data() : null;
+      const userDocRef = doc(db, "users", uid);
+      const userDoc = await getDoc(userDocRef);
+      
+      if (userDoc.exists()) {
+        const data = userDoc.data();
+        return {
+          ...data,
+          name: data.name || data.displayName || data.email?.split('@')[0] || "User",
+          displayName: data.displayName || data.name || data.email?.split('@')[0] || "User"
+        };
+      } else {
+        // Document does not exist in Firestore, let's create it automatically!
+        const userObj = fallbackUser || auth.currentUser;
+        if (userObj && userObj.uid === uid) {
+          const email = userObj.email;
+          const role = getRoleByEmail(email);
+          const displayName = userObj.displayName || email?.split('@')[0] || "User";
+          const profile = {
+            uid: uid,
+            email: email ? email.toLowerCase() : "",
+            name: displayName,
+            displayName: displayName,
+            role: role,
+            createdAt: new Date().toISOString()
+          };
+          await setDoc(userDocRef, profile);
+          return profile;
+        }
+        return null;
+      }
     }
   },
 
